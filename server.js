@@ -67,3 +67,15 @@ app.get("*", function(req, res) {
 app.listen(PORT, function() {
     console.log("App is listening to PORT: "+ PORT);
 })
+
+ // A function for deleting a note from the db
+function deleteNote(req) {
+    fs.readFile(path.join(__dirname, '/db/db.json'), 'utf8', function (err, data) {
+    if (err) throw err;
+    let dbFile = JSON.parse(data)
+    let updatedNotes = notes.filter((item) =>
+    item.id != req.params.id);
+    console.log(updatedNotes);
+    fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(updatedNotes), function () {});
+    })
+  };
